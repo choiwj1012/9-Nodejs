@@ -4,10 +4,23 @@
 
 // extract POST requested data
 var http = require('http');
+var fs = require('fs');
 
 // using module
 http.createServer(function(request, response){
-  request.on('data', function(data){
-    console.log('POST Data:', data);
-  });
-}).listen(52273);
+  if(request.method == 'GET'){
+    // request GET
+    fs.readFile('HTMLpage_3.html', function(error, data){
+      response.writeHead(200, {'Content-Type' : 'text/html'});
+      response.end(data);
+    });
+  }else if(request.method == 'POST'){
+    // request POST
+    request.on('data', function(data){
+      response.writeHead(200, {'Content-Type':'text/html'});
+      response.end('<h1>' + data + '</h1>');
+    });
+  }
+}).listen(52273, function(){
+  console.log('Server Running at http://127.0.0.1:52273');
+});
