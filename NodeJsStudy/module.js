@@ -25,3 +25,11 @@ exports.circleArea = function(radius){
   return radius;
 
 };
+
+
+// module로 쓰기 위한 추가 연결
+// module.exports = 객체이름;
+// 객체이름.메서드이름 = function(){}
+
+
+
