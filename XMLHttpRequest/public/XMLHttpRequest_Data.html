@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>XMLHttpRequest</title>
+  <script>
+    // XMLHttpRequest 객체를 생성하는 함수
+    function createRequest(){
+
+      try{
+
+        return new XMLHttpRequest();
+
+      } catch(exception) {
+
+        var versions = [
+          'Msxml2.XMLHTTP.6.0',
+          'Msxml2.XMLHTTP.5.0',
+          'Msxml2.XMLHTTP.4.0',
+          'Msxml2.XMLHTTP.3.0',
+          'Msxml2.XMLHTTP',
+          'Microsoft.XMLHttp'
+        ];
+
+        for(var i = 0; i < versions.length; i++){
+          try{
+            return new ActiveXObject(versions[i]);
+          } catch(e) {}
+        }
+
+      }
+
+    }
+  </script>
+  <script>
+    window.onload = function(){
+
+      // 구 버전의 웹 브라우저는 XMLHttpRequest 객체로 GET 방식의 요청을 보내면 캐싱한다.
+      // 캐싱이란 데이터나 값을 임시 장소에 미리 복사해 놓을 것을 의미한다.
+      // 결론적으로 구 버전의 경우에 GET -> POST -> GET 할때 앞의 GET과 뒤의 GET 값이 동일한 값을 갖는 문제가 발생
+      // 해결하려면 다음과 같이 변경한다
+      // request.open('GET', '/products?dummy=' + newDate().getTime(), false);
+
+      // tag id가 get인 node를 클릭하면
+      document.getElementById('get').onclick = function(){
+
+        // Ajax를 수행
+        var request = createRequest();
+        request.open('GET', '/products', false);
+        // request.open('GET', '/parameter?name=name&region=seoul', false);
+        request.send();
+
+        // 출력합니다
+        document.getElementById('output').value = request.responseText;
+
+      }
+
+      // tag id가 post인 node를 클릭하면
+      document.getElementById('post').onclick = function(){
+
+        // declare variable
+        var name = document.getElementById('name').value;
+        var price = document.getElementById('price').value;
+
+        // Ajax를 수행
+        var request = createRequest();
+        request.open('POST', '/products', false);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.send('name=' + name + '&price=' + price);
+
+        // alert
+        document.getElementById('output').value = request.responseText;
+
+      }
+
+      // tag id가 put인 node를 클릭하면
+      document.getElementById('put').onclick = function(){
+
+        // declare variable
+        var name = document.getElementById('name').value;
+        var price = document.getElementById('price').value;
+
+        // Ajax를 수행
+        var request = createRequest();
+        request.open('PUT', '/products/0', false);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.send('name=' + name + '&price=' + price);
+
+        // print
+        document.getElementById('output').value = request.responseText;
+
+      }
+
+      // tag id가 delete인 node를 클릭하면
+      document.getElementById('delete').onclick = function(){
+
+        // Ajax를 수행
+        var request = createRequest();
+        request.open('DELETE', '/products/0', false);
+        request.send();
+
+        // print
+        document.getElementById('output').value = request.responseText;
+
+      }
+
+    }
+  </script>
+</head>
+<body>
+  <button id="get">GET</button>
+  <button id="post">POST</button>
+  <button id="put">PUT</button>
+  <button id="delete">DELETE</button>
+  <h1>input</h1>
+  <input id="name">
+  <input id="price">
+  <h1>output</h1>
+  <textarea id="output" disabled="disabled" cols="50" rows="30"></textarea>
+</body>
+</html>

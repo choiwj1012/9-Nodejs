@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>XMLHttpRequest</title>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script>
+    $(document).ready(function(){
+
+      // id가 get인 node를 클릭하면
+      $('#get').click(function(){
+
+        $.ajax({
+          url : '/products',
+          type : 'get',
+          dataType : 'text',
+          success : function(data){
+            $("#output").val(data);
+          }
+        });
+
+      });
+
+      // id가 post인 node를 클릭하면
+      $('#post').click(function(){
+
+        $.ajax({
+
+          url : '/products',
+          type : 'post',
+          dataType : 'text',
+          data : {
+            name : $('#name').val(),
+            price : $('#price').val()
+          },
+          success : function(data){
+            $('#output').val(data);
+          }
+
+        });
+
+      });
+
+      // id가 put인 node를 클릭하면
+      $('#put').click(function(){
+
+        $.ajax({
+
+          url : '/products/0',
+          type : 'put',
+          dataType : 'text',
+          data : {
+            name : $('#name').val(),
+            price : $('#price').val()
+          },
+          success : function(data){
+            $('#output').val(data);
+          }
+
+        });
+
+      });
+
+      // id가 delete인 node를 클릭하면
+      $('#delete').click(function(){
+
+        $.ajax({
+          url : '/products/0',
+          type : 'delete',
+          dataType : 'text',
+          success : function(data){
+            $('#output').val(data);
+          }
+        });
+
+      });
+
+    });
+  </script>
+</head>
+<body>
+  <button id="get">GET</button>
+  <button id="post">POST</button>
+  <button id="put">PUT</button>
+  <button id="delete">DELETE</button>
+  <h1>input</h1>
+  <input type="text" id="name">
+  <input type="text" id="price">
+  <h1>output</h1>
+  <textarea name="" id="output" cols="50" rows="30"></textarea>
+</body>
+</html>

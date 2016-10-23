@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>XMLHttpRequest</title>
+  <script>
+    // XMLHttpRequest 객체를 생성하는 함수 (Explorer 하위 버전에서도 동작 가능)
+    function createRequest(){
+      var request;
+      try{
+        request = new XMLHttpRequest();
+      } catch(exception) {
+        try{
+          request = new ActiveXObject('Msxml2.XMLHTTP');
+        } catch(innerException) {
+          request = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+      }
+      return request;
+
+    }
+
+    // XMLHttpRequest 객체를 생성
+    var request = createRequest();
+
+    // javascript는 data가 배달된 것을 onreadystatechange 이벤트로 알 수 있다.
+    // onreadystatechange이벤트는 XMLHttpRequest의 상태가 변경될 때마다 이벤트를 호출한다.
+    request.onreadystatechange = function(event){
+
+      if(request.readyState == 4){
+
+        // HTTP Status Code, 200, 성공이면
+        if(request.status == 200){
+
+          // declare variable
+          var xml = request.responseXML;
+
+          // process data
+          var names = xml.getElementsByTagName('name');
+          var prices = xml.getElementsByTagName('price');
+
+          for(var i = 0; i < names.length; i++){
+
+            var name = names[i].childNodes[0].nodeValue;
+            var price = prices[i].childNodes[0].nodeValue;
+            document.body.innerHTML += '<h1>' + name + '</h1>';
+            document.body.innerHTML += '<h2>' + price + '</h2>';
+
+          }
+
+        }
+
+      }
+
+    };
+
+    // open() 메서드의 마지막 매개변수칸에 false는 동기방식, true는 비동기방식을 의미함
+    request.open('GET', '/data.xml', true);
+    request.send();
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

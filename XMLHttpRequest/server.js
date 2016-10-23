@@ -64,21 +64,22 @@ app.all('/data.xml', function(request, response){
   });
 
   output += '</products>';
-  response.sed(output);
+  response.type('text/xml');
+  response.send(output);
 
 });
 
 // static route
-// app.all('/parameter', function(request, response){
-//
-//   // variable declare
-//   var name = request.param('name');
-//   var region = request.param('region');
-//
-//   // response
-//   response.send('<h1>' + name + ':' + region + '</h1>');
-//
-// });
+app.all('/parameter', function(request, response){
+
+  // variable declare
+  var name = request.param('name');
+  var region = request.param('region');
+
+  // response
+  response.send('<h1>' + name + ':' + region + '</h1>');
+
+});
 
 // dynamic route
 app.all('/parameter/:id', function(request, response){
@@ -226,6 +227,7 @@ app.del('/products/:id', function(request, response){
   }
 
 });
+
 
 // start webserver
 http.createServer(app).listen(52273, function(){

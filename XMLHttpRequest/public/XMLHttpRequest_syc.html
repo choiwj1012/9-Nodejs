@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>XMLHttpRequest</title>
+</head>
+<body>
+  <script>
+
+    // var request = new XMLHttpRequest();
+    // XMLHttpRequest 객체는 빈 편지지와 같다. 이 빈 편지지에는 수취인과 배송 방식, 내용물을 넣을 수 있다.
+    // XMLHttpRequest 객체의 open() 메서드로 편지지의 전송 위치와 방식을 지정한다.
+    // request.open(전송 방식, 요청을 수행할 위치(경로), 비동기 사용 여부);
+    // request.open('GET', '/data.html', false);
+
+    // XMLHttpRequest 객체의 send() 메서드로 편지를 보낸다.
+    // Ajax를 수행한다.
+    // request.send();
+
+    // 편지가 성공적으로 보내져 답장이 왔다면 XMLHttpRequest 객체의 responseText 속성을 살펴본다
+    // alert(request.responseText);
+    // document.body.innerHTML += request.responseText;
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+    // XMLHttpRequest 객체를 생성하는 함수 (Explorer 하위 버전에서도 동작 가능)
+    function createRequest(){
+
+      var request;
+
+      try{
+
+        request = new XMLHttpRequest();
+
+      } catch(exception) {
+
+        try{
+
+          request = new ActiveXObject('Msxml2.XMLHTTP');
+
+        } catch(innerException) {
+
+          request = new ActiveXObject('Microsoft.XMLHTTP');
+
+        }
+
+      }
+
+      return request;
+
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+
+    // 동기 방식과 비동기 방식
+    // 동기 방식은 데이터를 서버와 클라이언트가 같은 속도로 연계하여 동작하는 방식을 의미한다.
+    // 비동기 방식은 서버와 클라이언트가 다른 속도로 동작하는 방식
+
+///////////////////////////////////////////////////////////////////////////////
+
+    // 본 예제는 동기 방식을 사용한 Ajax 요청이다
+
+    // XMLHttpRequest 객체를 생성합니다
+    // var request = createRequest();
+    // request.open('GET', '/data.html', false);
+    //
+    // // Ajax를 수행합니다
+    // request.send();
+    //
+    // // 출력합니다
+    // document.body.innerHTML += request.responseText;
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+    // 본 예제는 비동기 방식을 사용한 Ajax 요청이다
+
+    // XMLHttpRequest 객체를 생성
+    var request = createRequest();
+
+    // javascript는 data가 배달된 것을 onreadystatechange 이벤트로 알 수 있다.
+    // onreadystatechange이벤트는 XMLHttpRequest의 상태가 변경될 때마다 이벤트를 호출한다.
+    request.onreadystatechange = function(event){
+
+      if(request.readyState == 4){
+
+        // HTTP Status Code, 200, 성공이면
+        if(request.status == 200){
+
+          // 모든 데이터를 받으면 받은 데이터를 html에 써라
+          document.body.innerHTML += request.responseText;
+
+        }
+        
+      }
+
+      // 출력합니다
+      // alert(request.readyState);
+      // readyState 속성표
+      // 0 : request 객체를 만들었지만 open() 메서드로 초기화하지 않았음
+      // 1 : request 객체를 만들고 초기화했지만 send() 메서드가 사용되지 않음
+      // 2 : send() 메서드를 사용했지만 아직 데이터를 받지 못함
+      // 3 : 데이터의 일부만을 받음
+      // 4 : 모든 데이터를 받음
+
+    };
+
+    // open() 메서드의 마지막 매개변수칸에 false는 동기방식, true는 비동기방식을 의미함
+    request.open('GET', '/data.html', true);
+
+    // send() 메서드에 소비되는 시간 측정
+    var prevDate = new Date();
+    request.send();
+    var nowDate = new Date();
+
+    // 출력
+    alert(nowDate - prevDate);
+
+  </script>
+</body>
+</html>
