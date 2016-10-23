@@ -154,23 +154,78 @@ app.get('/products/:id', function(request, response){
 
 });
 
+// add one data
+app.post('/products', function(request, response){
 
+  // declare varialbe
+  var name = request.param('name');
+  var price = request.param('price');
+  var item = {
+    name : name,
+    price : price
+  };
 
+  // add data
+  items.push(item);
 
+  // response
+  response.send({
+    message : '데이터를 추가했습니다',
+    data : item
+  });
 
+});
 
+// modify one data
+app.put('/products/:id', function(request, response){
 
+  // declare variable
+  var id = Number(request.param('id'));
+  var name = request.param('name');
+  var price = request.param('price');
 
+  if(items[id]){
 
+    // modify data
+    if(name) {items[id].name = name;}
+    if(price) {items[id].price = price;}
 
+    // response
+    response.send({
+      message : '데이터를 수정했습니다',
+      data : items[id]
+    });
 
+  } else {
 
+    response.send({error : '존재하지 않는 데이터입니다!'});
 
+  }
 
+});
 
+// delete one data
+app.del('/products/:id', function(request, response){
 
+  // declare variable
+  var id = Number(request.param('id'));
 
+  if(isNaN(id)){
 
+    response.send({ error : '숫자를 입력하세요' });
+
+  } else if (items[id]) {
+
+    items.splice(id, 1);
+    response.send({ message : '데이터를 삭제했습니다' });
+
+  } else {
+
+    response.send({ error : '존재하지 않는 데이터입니다' });
+
+  }
+
+});
 
 // start webserver
 http.createServer(app).listen(52273, function(){
