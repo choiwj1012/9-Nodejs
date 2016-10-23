@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>XMLHttpRequest</title>
+</head>
+<body>
+  <script>
+
+    var request = new XMLHttpRequest();
+    // XMLHttpRequest 객체는 빈 편지지와 같다. 이 빈 편지지에는 수취인과 배송 방식, 내용물을 넣을 수 있다.
+    // XMLHttpRequest 객체의 open() 메서드로 편지지의 전송 위치와 방식을 지정한다.
+    // request.open(전송 방식, 요청을 수행할 위치(경로), 비동기 사용 여부);
+    request.open('GET', '/data.html', false);
+
+    // XMLHttpRequest 객체의 send() 메서드로 편지를 보낸다.
+    // Ajax를 수행한다.
+    request.send();
+
+    // 편지가 성공적으로 보내져 답장이 왔다면 XMLHttpRequest 객체의 responseText 속성을 살펴본다
+    alert(request.responseText);
+
+  </script>
+</body>
+</html>
