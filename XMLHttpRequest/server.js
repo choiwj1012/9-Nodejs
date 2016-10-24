@@ -34,7 +34,7 @@ app.all('/data.html', function(request, response){
   items.forEach(function(item){
     output += '<div>';
     output += ' <h1>' + item.name + '</h1>';
-    output += ' <h2>' + item.name + '</h2>';
+    output += ' <h2>' + item.price + '</h2>';
     output += '</div>';
   });
 

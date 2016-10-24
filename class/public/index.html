@@ -3,8 +3,17 @@
 	<head>
 		<meta charset = "UTF-8">
 		<title>Insert title here</title>
-	</head>	
+	</head>
 	<body>
-		나는 Node 서버에 위치한 index.html 파일입니다.
+		<script>
+
+			var request = new XMLHttpRequest();
+			request.open('GET', '/data.html', false);
+
+			request.send();
+
+			alert(request.responseText);
+
+		</script>
 	</body>
 </html>
