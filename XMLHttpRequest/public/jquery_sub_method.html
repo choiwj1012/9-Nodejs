@@ -6,34 +6,78 @@
   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
   <script>
 
-    $(document).ready(function(){
+    // $(document).ready(function(){
+    //
+    //   // declare variable
+    //   var data = {
+    //     name : 'RintIanTta',
+    //     region : 'Seoul'
+    //   };
+    //
+    //   // print
+    //   $('<h1></h1>').text($.param(data)).appendTo('body');
+    //
+    // });
 
-      // declare variable
-      var data = {
-        name : 'RintIanTta',
-        region : 'Seoul'
-      };
 
-      // print
-      $('<h1></h1>').text($.param(data)).appendTo('body');
+    // // 요청 매개변수 전달 형태 - 1
+    // $(document).ready(function(){
+    //
+    //   $('#my-form').submit(function(event){
+    //
+    //     var name = $("#name").val();
+    //     var region = $("#region").val();
+    //
+    //     // Ajax 요청을 수행
+    //     var url = '/parameter?name=' + name + '&region=' + region;
+    //     $('#wrap').load(url);
+    //
+    //     // 입력 양식의 기본 이벤트인 쿼리를 전송하고 페이지가 전환되는 것을
+    //     // 막기 위해 preventDefault() 메서드를 사용함
+    //     event.preventDefault();
+    //
+    //   });
+    //
+    // });
 
-    });
 
+    // // 요청 매개변수 전달 형태 - 2
+    // $(document).ready(function(){
+    //
+    //   $('#my-form').submit(function(event){
+    //
+    //     // 입력 양식의 value 속성을 가져옵니다
+    //     var name = $('#name').val();
+    //     var region = $('#region').val();
+    //
+    //     // Ajax 요청을 수행합니다
+    //     var url = '/parameter';
+    //     var data = {name : name, region : region};
+    //     var params = $.param(data);
+    //     $('#wrap').load(url, params);
+    //
+    //     // 기본 이벤트 제거
+    //     event.preventDefault();
+    //
+    //   });
+    //
+    // });
 
-    // 요청 매개변수 전달 형태 - 1
+    // 요청 매개변수 전달 형태 - 3
     $(document).ready(function(){
 
       $('#my-form').submit(function(event){
 
-        var name = $("#name").val();
-        var region = $("#region").val();
+        // 입력 방식의 value 속성을 가져옴
+        var name = $('#name').val();
+        var region = $('#region').val();
 
         // Ajax 요청을 수행
-        var url = '/parameter?name=' + name + '&region=' + region;
-        $('#wrap').load(url);
+        var url = '/parameter';
+        var data = {name : name, region : region};
+        $('#wrap').load(url, data);
 
-        // 입력 양식의 기본 이벤트인 쿼리를 전송하고 페이지가 전환되는 것을
-        // 막기 위해 preventDefault() 메서드를 사용함
+        // 기본 이벤트를 제거합니다
         event.preventDefault();
 
       });
@@ -52,7 +96,7 @@
       </tr>
       <tr>
         <td><label for="region">Region</label></td>
-        <td><input type="text" id="region" name="region"></td>
+        <td><input type="text" name="region" id="region"></td>
       </tr>
     </table>
     <input type="submit" value="Get Ajax String">
