@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="../../js/article/client.js"></script>
+
+<!-- 글목록 이벤트 핸들링 -->
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		
+		var articles = Controllers.getArticleController().requestSelectAll();
+		
+		if(articles.length === 0) {
+			alert('등록된 글이 없습니다.');
+			return;
+		}
+		
+		for(var i = 0 ; i < articles.length ; i++) {
+			var td_check = $('<td></td>').html('<input type="checkbox">');
+			var td_num = $('<td></td>').html(articles[i].num);
+			var td_title = $('<td></td>').html(articles[i].title);
+			var td_writer = $('<td></td>').html(articles[i].writer);
+			var td_readCount = $('<td></td>').html(articles[i].readCount);
+						
+			var tr = $('<tr></tr>');
+			tr.append(td_check, td_num, td_title, td_writer, td_readCount);
+			 $('tbody').append(tr);
+		}
+		
+	});
+</script>
+
+<!-- 글쓰기 이벤트 핸들링 -->
+<script>
+
+	$(document).ready(function() {
+		
+		$('#write_button').click(function() {
+			
+			Controllers.getArticleController().requestWriteView();
+			
+		});
+		
+	});
+
+</script>
+
+<script>
+
+	$(document).ready(function() {
+		
+		$('#delete_button').click(function() {
+
+			var num = $('#delete_num').val();
+			alert('[알림]클라이언트의 V:뷰(deleteView)가 클라이언트의 C:컨트롤러(requestDelete)를 호출함!');
+
+			Controllers.getArticleController().requestDelete(num);			
+			
+		});
+		
+	});
+
+</script>
+
+<script>
+
+	
+	$(document).ready(function() {
+		
+		$('#update_button').click(function() {
+			var num = $('#num').val(); 
+			var title = $('#title').val(); 
+			var content = $('#content').val();
+			var writer = $('#writer').val();			
+			
+			var article = new Article(title, content, writer);
+			article.setNum(num);
+			alert('[알림]클라이언트의 V:뷰(updateView)가 클라이언트의 C:컨트롤러(requestUpdate)를 호출함!');
+			Controllers.getArticleController().requestUpdate(article);	
+			
+		});
+		
+	});
+
+</script>
+
+<script>
+
+	$(document).ready(function() {
+		
+		$('#select_one_button').click(function() {
+
+			var num = $('#select_one_num').val();
+			alert('[알림]클라이언트의 V:뷰(selectOneView)가 클라이언트의 C:컨트롤러(requestSelectOne)를 호출함!');
+
+			var article = Controllers.getArticleController().requestSelectOne(num);			
+			
+			$('#select_one_title').text(article.title);
+			$('#select_one_content').text(article.content);
+			$('#select_one_writer').text(article.writer);
+			$('#select_one_readcount').text(article.readcount);
+
+		});
+		
+	});
+
+</script>
+
+
+</head>
+<body>
+	<!-- 글목록-->
+	<table>
+		<thead>
+			<tr>
+				<th>선택</th>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>조회수</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		</tbody>
+	</table>
+	<input type="button" id="write_button" value="글쓰기">
+	
+	<div>
+		<div>
+		<div>글번호</div>
+		<input type = "text" placeholder = "번호" id = "num">
+		</div>
+		
+		<div>
+		<div>제목</div>
+		<input type = "text" placeholder = "제목" id = "title">
+		</div>
+		
+		<div>
+		<div>내용</div>
+		<input type = "text" placeholder = "내용" id = "content">
+		</div>
+		
+		<div>
+		<div>작성자</div>
+		<input type = "text" placeholder = "작성자" id = "writer">
+		</div>
+		
+	</div>
+	
+	<input type="button" id="update_button" value="글수정">
+	
+	<div>
+		<input type="text" placeholder="조회 번호 입력" id="select_one_num">
+	</div>
+	<div>
+		<input type="button" value="글조회" id="select_one_button">
+	</div>
+	
+	<div>
+	<div id = "select_one_title">글</div>
+	<div id = "select_one_content">글내용</div>
+	<div id = "select_one_writer">작성자</div>
+	<div id = "select_one_readcount">조회수</div>
+	</div>
+	
+	<div>
+		<input type="text" placeholder="삭제 번호 입력" id="delete_num">
+	</div>
+	<div>
+		<input type="button" value="글삭제" id="delete_button">
+	</div>
+	
+</body>
+</html>

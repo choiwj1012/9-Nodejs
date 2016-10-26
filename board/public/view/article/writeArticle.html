@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app>
+<head>
+  <meta charset="UTF-8">
+  <title>write article</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+  <script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+  <script src="../../js/article/article.js"></script>
+  <script src="../../js/article/articleDao.js"></script>
+  <script src="../../js/article/articleController.js"></script>
+
+  <!-- write article event handling -->
+  <script>
+
+    $(document).ready(function() {
+
+      $("#save_btn").click(function(){
+
+        var title = $("#title").val();
+        var content = $("#content").val();
+        var writer = $("#writer").val();
+        var article = new Article(title, content, writer);
+        var isSuccess = articleController.requestWriteArticle(article);
+
+        if(isSuccess.message == true){
+          alert("글작성에 성공하였습니다");
+        } else {
+          alert("글작성에 실패하였습니다");
+        }
+
+      });
+
+    });
+
+  </script>
+
+  <!-- 목록보기로 가기 -->
+  <script>
+
+  $(document).ready(function() {
+
+    $("#cancel_btn").click(function(){
+
+      articleController.requestSelectAllView();
+
+    });
+
+  });
+
+  </script>
+
+</head>
+<body>
+
+    <!-- header -->
+    <header>
+
+      <div class="container">
+
+        <div class="jumbotron text-center">
+          <h1>글쓰기</h1>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- section -->
+    <section>
+
+      <div class="container">
+
+        <span>Total : </span>
+        <span>page : 1</span>
+        <hr>
+
+        <form action=" " class="form-horizontal">
+
+          <div class="form-group">
+            <label for="title" class="control-label col-sm-2">Title : </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="content" class="control-label col-sm-2">Content : </label>
+            <div class="col-sm-10">
+              <textarea class="form-control" id="content" rows="5" placeholder="내용을 입력하세요"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="content" class="control-label col-sm-2">Writer : </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="writer" placeholder="작성자를 입력하세요">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <input type="button" id="save_btn" value="저장">
+              <input type="button" id="cancel_btn" value="취소">
+              <!-- <button type="button" class="btn btn-default" id="save_btn">저장</button>
+              <button type="button" class="btn btn-default" id="cancel_btn">취소</button> -->
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </section>
+
+    <!-- footer -->
+    <footer>
+
+    </footer>
+
+</body>
+</html>

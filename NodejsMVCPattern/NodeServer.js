@@ -1,5 +1,5 @@
 var fs = require('fs');
-eval(fs.readFileSync('ArticleController.js')+'');
+eval(fs.readFileSync('/js/ArticleController.js')+'');
 
 // create and connect server
 var controller = new ArticleController();

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="../../js/article/client.js"></script>
+
+<!-- 글쓰기뷰 이벤트 핸들링 -->
+<script>
+
+	$(document).ready(function() {
+		
+		$('#delete_button').click(function() {
+
+			var num = $('#number').val();
+			alert('[알림]클라이언트의 V:뷰(deleteView)가 클라이언트의 C:컨트롤러(requestDelete)를 호출함!');
+
+			Controllers.getArticleController().requestDelete(num);			
+			
+		});
+		
+	});
+
+</script>
+
+</head>
+<body>
+	<div>
+		<input type="text" placeholder="번호 입력" id="number">
+	</div>
+	<div>
+		<input type="button" value="삭제" id="delete_button">
+	</div>
+</body>
+</html>

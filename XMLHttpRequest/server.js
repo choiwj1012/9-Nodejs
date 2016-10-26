@@ -9,7 +9,7 @@ var items = [{
 }, {
   name : '홍차',
   price : '5000'
-},{
+}, {
   name : '커피',
   price : '5000'
 }];
