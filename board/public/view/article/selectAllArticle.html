@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app>
+<head>
+  <meta charset="UTF-8">
+  <title>article list</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+  <style>
+    a{text-decoration:none; color:#000;}
+  </style>
+  <script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+  <script src="../../js/article/article.js"></script>
+  <script src="../../js/article/articleDao.js"></script>
+  <script src="../../js/article/articleController.js"></script>
+
+  <!-- article list event handling -->
+  <script>
+
+    $(document).ready(function(){
+
+      var articles = articleController.requestSelectAll();
+
+      if(articles.length == 0){
+        alert('등록된 글이 없습니다');
+        return;
+      }
+
+      for(var i=0; i<articles.length; i++){
+
+        var check = $("<td></td>").html('<input type="checkbox">');
+        var number = $("<td></td>").html(articles[i].number).addClass("number");
+        var title = $("<td></td>").html("<a href='#'>" + articles[i].title + "</a>").addClass("title");
+        var writer = $("<td></td>").html(articles[i].writer);
+        var readCount = $("<td></td>").html(articles[i].readCount);
+
+        var tr = $("<tr></tr>");
+        tr.append(check, number, title, writer, readCount);
+        $('tbody').append(tr);
+
+      }
+
+    });
+
+  </script>
+
+  <!-- 글쓰기 버튼을 누르면 -->
+  <script>
+
+  $(document).ready(function() {
+    $('#write_btn').on('click',function(){
+      articleController.requestWriteArticleView();
+    });
+  });
+
+  </script>
+
+  <!-- 제목을 누르면 -->
+  <script>
+
+  $(document).ready(function() {
+    $(".title").on('click',function(){
+
+      var number = $(this).closest("tr").find(".number").text();
+      var isSuccess = articleController.requestSelectOne(number);
+
+      if(isSuccess.message !== true){
+        alert("글 조회에 실패하였습니다");
+      }
+      
+    });
+  });
+
+  </script>
+
+</head>
+<body>
+  <!-- header -->
+  <header>
+
+    <div class="container">
+
+      <div class="jumbotron text-center">
+        <h1>게시판 목록</h1>
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- section -->
+  <section>
+
+    <div class="container">
+
+      <span>Total : </span>
+      <span>page : 1</span>
+      <hr>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>선택</th>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+
+      <div class="container">
+        <input type="text">
+        <input type="button" id="search_btn" value="검색">
+        <input type="button" id="write_btn" value="글쓰기">
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- footer -->
+  <footer>
+
+  </footer>
+</body>
+</html>
